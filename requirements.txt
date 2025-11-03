@@ -1,0 +1,14 @@
+# === Core Automation Dependencies ===
+selenium>=4.22.0
+webdriver-manager>=4.0.2
+pip >=25.2
+# === Testing Framework ===
+pytest>=8.3.0
+pytest-xdist>=3.6.1   # מאפשר הרצה במקביל של בדיקות
+
+# === Logging and Output Enhancements ===
+colorama>=0.4.6       # צבעים בקונסול
+
+# === Optional but Recommended ===
+pytest-html>=4.1.1    # הפקת דוחות HTML
+pytest-rerunfailures>=12.0  # להריץ מחדש בדיקות שנכשלו זמנית
