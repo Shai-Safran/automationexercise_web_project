@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from framework.logger import log_info, log_success, log_error
+from framework.logger_old import log_info, log_success, log_error
 import pytest
 
 @pytest.mark.regression

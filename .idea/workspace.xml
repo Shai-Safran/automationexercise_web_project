@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="619e73b2-096c-4c06-b9e4-07be80a00439" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/test_login-signup_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_navigation_to_test_cases.py" afterDir="false" />
+    <list default="true" id="619e73b2-096c-4c06-b9e4-07be80a00439" name="Changes" comment="שיפור הצגת ההרצה">
+      <change afterPath="$PROJECT_DIR$/framework/logger_old.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FULL_RUN_COMMAND_TERMINAL.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/FULL_RUN_COMMAND_TERMINAL.TXT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FULL_RUN_COMMAND_TERMINAL.TXT" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/framework/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/framework/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_homepage.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_homepage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_navigation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_navigation_to_test_cases.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_navigation_to_test_cases.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_testcases_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_testcases_page.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,12 +56,16 @@
   "keyToString": {
     "Batch.run_tests.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "PowerShell.run_tests.ps1.executor": "Run",
     "Python tests.Python tests in test_homepage.py.executor": "Run",
     "Python tests.Python tests in test_login-signup_page.py.executor": "Run",
     "Python tests.Python tests in test_navigation.py.executor": "Run",
+    "Python tests.Python tests in test_navigation_to_test_cases.py.executor": "Run",
+    "Python tests.Python tests in test_testcases_page.py.executor": "Run",
     "Python.Run All Tests with HTML & Log.executor": "Debug",
     "Python.conftest.executor": "Run",
     "Python.logger.executor": "Run",
+    "Python.אאאאאאא.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -72,20 +77,12 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Owner\PycharmProjects\automationexercise_web_project\framework" />
+      <recent name="C:\Users\Owner\PycharmProjects\automationexercise_web_project\framework\logs" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="run_tests" type="BatchConfigurationType" factoryName="Batch" temporary="true">
-      <module name="automationexercise_web_project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SCRIPT_NAME" value="run_tests.bat" />
-      <option name="PARAMETERS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Run All Tests with HTML &amp; Log" type="PythonConfigurationType" factoryName="Python">
-      <module name="automationexercise_web_project" />
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Final Project in Software Testing and Automation Course" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -93,13 +90,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.13 (automationexercise_web_project)" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\Owner\PycharmProjects\automationexercise_web_project" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="`python -m pytest --html reports/test_report_$(Get-Date -Format &quot;yyyyMMdd_HHmmss&quot;).html --self-contained-html Tee-Object logs/run_$(Get-Date -Format &quot;yyyyMMdd_HHmmss&quot;).log`" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -107,13 +103,104 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Batch.run_tests" />
-      <item itemvalue="Python.Run All Tests with HTML &amp; Log" />
-    </list>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="Final Project in Software Testing and Automation Course" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Docutils task">
+      <module name="Final Project in Software Testing and Automation Course" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Sphinx task">
+      <module name="Final Project in Software Testing and Automation Course" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test_navigation_to_test_cases.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Final Project in Software Testing and Automation Course" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_navigation_to_test_cases.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Autodetect">
+      <module name="Final Project in Software Testing and Automation Course" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="Final Project in Software Testing and Automation Course" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Batch.run_tests" />
+        <item itemvalue="Python tests.Python tests in test_navigation_to_test_cases.py" />
       </list>
     </recent_temporary>
   </component>
@@ -132,6 +219,28 @@
       <option name="presentableId" value="Default" />
       <updated>1762183232645</updated>
     </task>
+    <task id="LOCAL‎-00001" summary="הוספת בדיקות ושיפור בדיקות קיימות">
+      <option name="closed" value="true" />
+      <created>1762799090992</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL‎-00001" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1762799090992</updated>
+    </task>
+    <task id="LOCAL‎-00002" summary="שיפור הצגת ההרצה">
+      <option name="closed" value="true" />
+      <created>1762799643980</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL‎-00002" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1762799643980</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="הוספת בדיקות ושיפור בדיקות קיימות" />
+    <MESSAGE value="שיפור הצגת ההרצה" />
+    <option name="LAST_COMMIT_MESSAGE" value="שיפור הצגת ההרצה" />
   </component>
 </project>

@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from framework.logger import log_info, log_success, log_error, log_warning
+from framework.logger_old import log_info, log_success, log_error, log_warning
 import threading
 import sys
 

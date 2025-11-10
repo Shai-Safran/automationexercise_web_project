@@ -1,25 +1,29 @@
 import logging
-import time
-from colorama import Fore, Style, init
 import os
+import time
+from colorama import Fore, init
 
 init(autoreset=True)
 
-# יצירת תיקיית לוגים אם לא קיימת
-os.makedirs("logs", exist_ok=True)
+# --- ספריית הפרויקט הראשית ---
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# הגדרת קובץ לוג עם תאריך ושעה
-log_file = f"logs/run_{time.strftime("%Y%m%d-%H-%M-%S")}.log"
+# --- תיקיית הלוגים ---
+LOG_DIR = os.path.join(PROJECT_ROOT, "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
 
-# הגדרה בסיסית של logging
+# --- קובץ לוג עם חותמת זמן ---
+LOG_FILE = os.path.join(LOG_DIR, f"run_{time.strftime('%Y%m%d-%H%M%S')}.log")
+
+# --- הגדרת logging ---
 logging.basicConfig(
-    filename=log_file,
+    filename=LOG_FILE,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    encoding='utf-8'  # <--- הוספת פרמטר הקידוד
+    encoding='utf-8'
 )
 
-# פונקציות עזר ללוגים צבעוניים
+# --- פונקציות עזר ללוגים צבעוניים ---
 def log_info(msg):
     print(Fore.CYAN + msg)
     logging.info(msg)
@@ -36,7 +40,13 @@ def log_error(msg):
     print(Fore.RED + "❌ " + msg)
     logging.error(msg)
 
-def log_title(title):
-    line = "=" * 60
-    print(Fore.MAGENTA + f"\n{line}\n{title}\n{line}")
-    logging.info(f"===== {title} =====")
+def log_test_start(test_name):
+    msg = f"--- STARTING TEST: {test_name} ---"
+    print(Fore.BLUE + msg)
+    logging.info(msg)
+
+def log_test_end(test_name, outcome):
+    status = "PASSED ✅" if outcome == "passed" else "FAILED ❌"
+    msg = f"--- ENDING TEST: {test_name} - {status} ---"
+    print(Fore.MAGENTA + msg)
+    logging.info(msg)

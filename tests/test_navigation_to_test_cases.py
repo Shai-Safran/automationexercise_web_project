@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-from framework.logger import log_info, log_success, log_error, log_warning
+from framework.logger_old import log_info, log_success, log_error, log_warning
 
 init(autoreset=True)
 
