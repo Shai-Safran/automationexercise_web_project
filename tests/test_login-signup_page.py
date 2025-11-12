@@ -1,25 +1,20 @@
 import pytest
 import time
 import random
-import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, UnexpectedAlertPresentException
 from webdriver_manager.chrome import ChromeDriverManager
-
-# ===================== Colors =====================
-class LogColors:
-    GREEN = '\033[92m'
-    RED = '\033[91m'
-    YELLOW = '\033[93m'
-    RESET = '\033[0m'
-
-# ===================== Logging setup =====================
-logging.getLogger('WDM').setLevel(logging.ERROR)
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+from framework.logger import (
+    log_info,
+    log_success,
+    log_error,
+    log_warning,
+    log_test_start,
+    log_test_end
+)
 
 # ===================== Helpers =====================
 def safe_find(driver, by, value, timeout=10):
@@ -46,7 +41,7 @@ def close_popup(driver):
 @pytest.fixture
 def driver():
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
+    options.add_argument("--headless=new")  # ריצה ללא פתיחת חלון
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
@@ -83,92 +78,89 @@ def register_user(driver):
     time.sleep(1)
     close_popup(driver)
 
-    logging.info(f"{LogColors.GREEN}✅ Registered user: {email}{LogColors.RESET}")
+    log_success(f"Registered user: {email}")
     return name, email, password
 
 def login_user(driver, email, password):
     driver.get("https://automationexercise.com/")
     signup_link = safe_find(driver, By.LINK_TEXT, "Signup / Login")
-    if not signup_link:
-        logging.warning(f"{LogColors.YELLOW}⚠️ SKIPPED – login form not found for {email}{LogColors.RESET}")
-        pytest.skip(f"Login form not found for {email}")
-        return
-
-    scroll_click(driver, signup_link)
-    time.sleep(1)
+    if signup_link:
+        scroll_click(driver, signup_link)
+        time.sleep(1)
 
     login_email = safe_find(driver, By.XPATH, "//input[@data-qa='login-email']") or safe_find(driver, By.NAME, "email")
     login_password = safe_find(driver, By.XPATH, "//input[@data-qa='login-password']") or safe_find(driver, By.NAME, "password")
     login_btn = safe_find(driver, By.XPATH, "//button[@data-qa='login-button']")
 
-    if not login_email or not login_password or not login_btn:
-        logging.warning(f"{LogColors.YELLOW}⚠️ SKIPPED – login form elements missing for {email}{LogColors.RESET}")
-        pytest.skip(f"Login form elements missing for {email}")
-        return
-
-    login_email.send_keys(email)
-    login_password.send_keys(password)
-    scroll_click(driver, login_btn)
-    time.sleep(1)
+    if login_email and login_password and login_btn:
+        login_email.send_keys(email)
+        login_password.send_keys(password)
+        scroll_click(driver, login_btn)
+        time.sleep(1)
+    else:
+        raise Exception("⚠️ Login form elements missing")
 
 def logout_if_logged_in(driver):
     logout_link = safe_find(driver, By.LINK_TEXT, "Logout")
     if logout_link:
         scroll_click(driver, logout_link)
-        logging.info(f"{LogColors.GREEN}🔹 Logged out user{LogColors.RESET}")
+        log_info("Logged out user")
         time.sleep(1)
 
 # ===================== Tests =====================
-def log_test_result(name, status):
-    color = LogColors.GREEN if status == "PASS" else LogColors.RED if status == "FAIL" else LogColors.YELLOW
-    logging.info(f"{color}{status} – {name}{LogColors.RESET}")
-
 def test_register_user(driver):
     test_name = "test_register_user"
+    log_test_start(test_name)
     try:
         username, email, password = register_user(driver)
         logout_if_logged_in(driver)
-        log_test_result(test_name, "PASS")
+        log_test_end(test_name, "passed")
     except Exception as e:
-        logging.error(e)
-        log_test_result(test_name, "FAIL")
+        log_error(f"Error in {test_name}: {e}")
+        log_test_end(test_name, "failed")
         raise
 
 def test_login_wrong_user(driver):
     test_name = "test_login_wrong_user"
+    log_test_start(test_name)
     try:
         login_user(driver, "wrong@example.test", "invalid123")
-        logging.error("❌ Login with wrong credentials succeeded – should fail")
-        log_test_result(test_name, "FAIL")
-        assert False
-    except pytest.skip.Exception:
-        log_test_result(test_name, "SKIPPED")
-    except Exception:
-        log_test_result(test_name, "PASS")
+
+        # בדיקה אם מופיעה הודעת השגיאה
+        error_elem = safe_find(driver, By.XPATH, "//p[contains(text(),'Your email or password is incorrect')]")
+        if error_elem and error_elem.is_displayed():
+            log_success("✅ זוהתה הודעת השגיאה – כניסה נכשלת כפי שצפוי")
+            log_test_end(test_name, "passed")
+        else:
+            log_error("❌ לא זוהתה הודעת השגיאה – כניסה הצליחה עם פרטי שגוי")
+            log_test_end(test_name, "failed")
+            assert False
+    except Exception as e:
+        log_error(f"Error in {test_name}: {e}")
+        log_test_end(test_name, "failed")
+        raise
 
 def test_login_registered_user(driver, registered_user):
     test_name = "test_login_registered_user"
     username, email, password = registered_user
+    log_test_start(test_name)
     try:
         login_user(driver, email, password)
-        log_test_result(test_name, "PASS")
-    except pytest.skip.Exception:
-        log_test_result(test_name, "SKIPPED")
+        log_test_end(test_name, "passed")
     except Exception as e:
-        logging.error(e)
-        log_test_result(test_name, "FAIL")
+        log_error(f"Error in {test_name}: {e}")
+        log_test_end(test_name, "failed")
         raise
 
 def test_logout_registered_user(driver, registered_user):
     test_name = "test_logout_registered_user"
     username, email, password = registered_user
+    log_test_start(test_name)
     try:
         login_user(driver, email, password)
         logout_if_logged_in(driver)
-        log_test_result(test_name, "PASS")
-    except pytest.skip.Exception:
-        log_test_result(test_name, "SKIPPED")
+        log_test_end(test_name, "passed")
     except Exception as e:
-        logging.error(e)
-        log_test_result(test_name, "FAIL")
+        log_error(f"Error in {test_name}: {e}")
+        log_test_end(test_name, "failed")
         raise
