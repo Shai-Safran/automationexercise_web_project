@@ -1,14 +1,17 @@
-# --- conftest.py (Stable Selenium Manager Version) ---
+# --- conftest.py (Stable Selenium Manager Version - No DEBUG) ---
 
 import pytest
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from framework.logger import log_info, log_error
+from framework.logger import log_info, log_error, log_warning
+import logging
 
-from framework.actions import safe_click, remove_all_overlays
+# --- Debug mode OFF ---
+# להפעיל DEBUG אם תרצה:
+# logging.getLogger().setLevel(logging.DEBUG)
+# log_info("🔧 DEBUG logging הופעל (אופציונלי)")
 
-# Timeout for Chrome session stability
 COMMAND_TIMEOUT_SECONDS = 300
 
 
@@ -25,13 +28,11 @@ def pytest_addoption(parser):
 def driver(request):
     log_info("🚀 מפעיל דפדפן Chrome באמצעות Selenium Manager...")
 
-    # האם להריץ גלוי או headless
     headless_arg = request.config.getoption("--headless").lower()
     is_headless = not (headless_arg == "false" or headless_arg == "no")
 
     chrome_options = Options()
 
-    # מצב Headless חדש
     if is_headless:
         chrome_options.add_argument("--headless=new")
         log_info("🤖 מצב הדפדפן: Headless")
@@ -50,17 +51,18 @@ def driver(request):
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
 
     try:
-        # 🚀 **Selenium Manager עושה הכל — אין צורך בנתיב ל־chromedriver**
+        # Selenium Manager פותר הכל
         driver = webdriver.Chrome(options=chrome_options)
 
-        log_info("✅ Chrome הופעל בהצלחה (Selenium Manager)")
+        log_info("✅ Chrome הופעל בהצלחה (Selenium Manager ✔️)")
 
         driver.set_page_load_timeout(COMMAND_TIMEOUT_SECONDS)
         driver.maximize_window()
         time.sleep(1)
 
-        log_info("🌐 טוען את האתר הראשי: automationexercise.com")
-        driver.get("https://automationexercise.com/")
+        start_url = "https://automationexercise.com/"
+        log_info(f"🌐 טוען את האתר הראשי: {start_url}")
+        driver.get(start_url)
 
         yield driver
 
@@ -69,8 +71,9 @@ def driver(request):
         raise e
 
     finally:
-        log_info("🚪 סוגר דפדפן...")
+        log_info("🚪 סוגר את הדפדפן...")
         try:
             driver.quit()
         except Exception:
+            log_warning("⚠️ לא ניתן לסגור דפדפן (כנראה כבר סגור)")
             pass
