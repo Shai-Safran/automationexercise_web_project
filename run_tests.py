@@ -97,5 +97,13 @@ if __name__ == "__main__":
     print(f"⏱️ זמן ריצה כולל (סשן Pytest): {duration:.2f} שניות")
     print("=" * 50)
 
+    # 💡 פתיחת הדוח בדפדפן אוטומטית
+    try:
+        import webbrowser
+
+        webbrowser.open(f"file://{os.path.abspath(report_path)}")
+        print(f"🌐 הדוח נפתח אוטומטית: {report_path}")
+    except Exception as e:
+        print(f"❌ לא ניתן לפתוח את הדוח אוטומטית: {e}")
     # משאיר את קוד היציאה של Pytest (אם לא 0, הייתה כשלון)
     sys.exit(exit_code)
